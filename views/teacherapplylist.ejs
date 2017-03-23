@@ -1,0 +1,74 @@
+<script>
+    function pass(id){
+        $.get('/admin/pass?id='+id,function(rehtml){
+            if(rehtml==1){
+                $("#main").load('/admin/teacherapplylist');
+            }else{
+                alert('服务端出错');
+            }
+        });
+    }
+    function reject(id){
+        rejectform.rid.value=id;
+        $('#myModal').modal();
+    }
+    function rejectSub(){
+        $.post('/admin/reject',$('#rejectform').serialize(),function(rehtml){
+            if(rehtml==1){
+                $("#main").load('/admin/teacherapplylist');
+            }else{
+                alert('服务端出错');
+            }
+            $(".modal-backdrop").remove(); //消除遮罩层
+            $('#myModal').modal('hide');
+        });
+        return false;
+    }
+</script>
+<table class="table">
+    <caption>讲师社宁列表</caption>
+    <thead>
+    <tr>
+        <th>证件照</th>
+        <th>姓名</th>
+        <th>简介</th>
+        <th>身份证</th>
+        <th>操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% rs.forEach(function(item){ %>
+    <tr>
+        <td><img src='../<%-item.photopath%>' width='120px' height="150px"/><br/></td>
+        <td><%-item.realname%><br/></td>
+        <td><%-item.idnumber%></td>
+        <td><%-item.brief%></td>
+        <td>
+            <button type="button" class="btn btn-danger" onclick="pass('<%-item._id%>')">通过审核</button>&nbsp;
+            <button type="button" class="btn btn-danger" onclick="reject('<%-item._id%>')">审核驳回</button>
+        </td>
+    </tr>
+    <%})%>
+    </tbody>
+</table>
+
+<div class="modal fade" id="myModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" style='text-align: center'>
+                驳回理由
+            </div>
+            <div class="modal-body" style='text-align: center'>
+                <form id='rejectform' name='rejectform' onsubmit="return rejectSub();">
+                    <textarea cols='76' rows='9' name='reason'></textarea><br/>
+                    <input type='hidden' name='rid'/>
+                    <input type='submit' class="btn btn-danger" value='驳回'/>&nbsp;
+                    <input type='button' class="btn btn-danger" value='取消'/>
+                </form>
+            </div>
+            <div class="modal-footer" style='text-align:center'>
+                &nbsp;
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>

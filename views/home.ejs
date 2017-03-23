@@ -1,0 +1,29 @@
+<%include header.ejs%>
+<script>
+    function apply() {
+        $('#main').load('/home/apply');
+    }
+</script>
+<div class="row" style="height: 90%">
+    <div class="col-md-1">.col-md-8</div>
+    <div class="col-md-2" style='border-radius:6px;background:#D9534F;height:100%;color:#ffffff;font-size: 24px;font-family: 微软雅黑'>
+        <table height='100%' align='center'>
+            <tr><td>关注的课程</td></tr>
+            <tr><td>关注的讲师</td></tr>
+            <tr><td>学习进度</td></tr>
+            <tr><td>同学圈</td></tr>
+            <tr><td>
+                    <% if(loginbean.role==1){ %>
+                    <a href='#' onclick='apply()'style="color: white">申请成为讲师</a>
+                    <% }else if(loginbean.role==2){ %>
+                    <a href='#'  style="color: white">讲师资格审核中</a>
+                    <% }else if(loginbean.role==3){ %>
+                    <a href='/teacher/' style="color: white">我的教学</a>
+                    <% } %>
+                </td></tr>
+        </table>
+    </div>
+    <div id="main" class="col-md-8"></div>
+    <div class="col-md-1">.col-md-1</div>
+</div>
+<%include footer.ejs%>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>在线教育</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        html,body{
+            height: 100%;
+        }
+        .header-left{
+            line-height: 34px;
+            font-size: 17px;
+            color:#D9534F;
+        }
+        a:hover{
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+<div class="row" style="padding: 10px 0">
+    <div class="col-md-1"></div>
+    <div class="col-md-3"><a href="/" class="header-left">首页</a></div>
+    <div class="col-md-4">
+        <div class="input-group">
+            <input type="text" class="form-control " >
+            <span class="input-group-btn">
+            <button class="btn btn-danger" type="button" >搜 索</button>
+            </span>
+        </div><!-- /input-group -->
+    </div>
+    <div class="col-md-3">
+        <!--<a href="#" class="header-left">消息&nbsp</a>-->
+        <!--<a href="#" class="header-left">个人空间&nbsp</a>-->
+        <!--<a href="#" class="header-left">注销&nbsp</a>-->
+        <%if(!loginbean){%>
+        <button type="button" class="btn btn-danger" data-toggle="modal" data-target=".bs-example-modal-lg"
+                style="float: right" href='/users/login'>
+            登录/注册
+        </button>
+        <%}else{%>
+        你好,<%-loginbean.nicheng%>&nbsp;
+        <span class="header-left">消息&nbsp;</span>
+            <% if(loginbean.role>0){%>
+                <a href='/home/' class="header-left">个人空间</a>
+            <%}else{%>
+                <a href="/admin" class="header-left">管理员空间</a>
+            <%}%>
+        <a href="/users/logout" class="header-left">注销</a>
+        <%}%>
+    </div>
+    <div class="col-md-1"></div>
+</div>
